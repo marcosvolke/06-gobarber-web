@@ -46,8 +46,12 @@ const SignIn: React.FC = () => {
       });
     } catch (err) {
       // console.log(err);
-      const errors = getValidationErrors(err);
-      formRef.current?.setErrors(errors);
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+        formRef.current?.setErrors(errors);
+      }
+
+      // disparar um toast
     }
   }, [signIn]); //Toda variável externa usada no useCallback tem q entrar no arrau de dependências
 
