@@ -5,6 +5,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext';
 
 import getValidationErrors from '../../utils/getValidationErros';
 
@@ -24,6 +25,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(async (data: SignInFormData) => {
     // console.log(data);
@@ -40,7 +42,7 @@ const SignIn: React.FC = () => {
         abortEarly: false,
       });
 
-      signIn({
+      await signIn({
         email: data.email,
         password: data.password,
       });
@@ -51,9 +53,9 @@ const SignIn: React.FC = () => {
         formRef.current?.setErrors(errors);
       }
 
-      // disparar um toast
+      addToast();
     }
-  }, [signIn]); //Toda variável externa usada no useCallback tem q entrar no arrau de dependências
+  }, [signIn, addToast]); //Toda variável externa usada no useCallback tem q entrar no arrau de dependências
 
   return (
       <Container>
