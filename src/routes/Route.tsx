@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
-import { FiRotateCcw } from 'react-icons/fi';
 
 interface RouteProps extends ReactDOMRouteProps {
   isPrivate?: boolean;
@@ -22,7 +21,7 @@ const Route: React.FC<RouteProps> = ({ isPrivate = false, component: Component, 
     <ReactDOMRoute
       {...restProps}
       // uso do location é para manter o histórico e o voltar funcionar
-      render={( { location } ) => {
+      render={({ location }) => {
         // isprivate === issigned
         // true/true = OK
         // true/false = redirecionar para o login
@@ -30,7 +29,8 @@ const Route: React.FC<RouteProps> = ({ isPrivate = false, component: Component, 
         // false/false = OK
 
         // se é rota privada e o usuário existe, manda o componente informado na FiRotateCcw, senão redireciona para o login ou para o dashboard se não for privado
-        return isPrivate === !!user ? (<Component />) : (<Redirect to={{ pathname: isPrivate ? '/' : '/dashboard', state: { from: location } }} />);
+        return isPrivate === !!user ? (<Component />) : (<Redirect to={{ pathname: isPrivate ? '/' : '/dashboard',
+          state: { from: location }, }} />);
       }}
     />
   );
