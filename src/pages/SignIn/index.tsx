@@ -15,7 +15,7 @@ import logoImg from '../../assets/logo.svg';
 import Input from '../../components/input';
 import Button from '../../components/button';
 
-import { Container, Content, Background } from './styles';
+import { Container, Content, AnimationContainer, Background } from './styles';
 
 interface SignInFormData {
   email: string;
@@ -52,6 +52,7 @@ const SignIn: React.FC = () => {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
         formRef.current?.setErrors(errors);
+        return;
       }
 
       addToast({
@@ -65,6 +66,7 @@ const SignIn: React.FC = () => {
   return (
       <Container>
           <Content>
+            <AnimationContainer>
               <img src={logoImg} alt="GoBarber"/>
 
               <Form ref={formRef} onSubmit={handleSubmit}>
@@ -82,6 +84,7 @@ const SignIn: React.FC = () => {
                   <FiLogIn />
                   Criar conta
               </Link>
+            </AnimationContainer>
           </Content>
 
           <Background />

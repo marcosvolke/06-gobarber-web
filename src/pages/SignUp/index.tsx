@@ -11,7 +11,7 @@ import logoImg from '../../assets/logo.svg';
 import Input from '../../components/input';
 import Button from '../../components/button';
 
-import { Container, Content, Background } from './styles';
+import { Container, Content, AnimationContainer, Background } from './styles';
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
@@ -45,6 +45,7 @@ const SignUp: React.FC = () => {
         <Background />
 
         <Content>
+          <AnimationContainer>
             <img src={logoImg} alt="GoBarber"/>
 
             {/* Propriedade do Form do Unform para inicializar campos: initialData={{ name: 'Marcos' }} */}
@@ -58,11 +59,11 @@ const SignUp: React.FC = () => {
                 <Button type="submit">Cadastrar</Button>
             </Form>
 
-            {/* teste */}
             <Link to="/">
                 <FiArrowLeft />
                 Voltar para logon
             </Link>
+          </AnimationContainer>
         </Content>
     </Container>
   );
