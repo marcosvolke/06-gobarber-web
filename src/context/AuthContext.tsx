@@ -30,6 +30,9 @@ const AuthProvider: React.FC = ({ children }) => {
     const token = localStorage.getItem('@GoBarber:token');
     const user = localStorage.getItem('@GoBarber:user');
     if (token && user) {
+      //define header padrao para todas as requisicoes - executa quando dá F5/refresh na página
+      api.defaults.headers.authorization = `Bearer ${token}`;
+
       return {
         token,
         user: JSON.parse(user),
@@ -48,6 +51,9 @@ const AuthProvider: React.FC = ({ children }) => {
     const { token, user } = response.data;
     localStorage.setItem('@GoBarber:token', token);
     localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+
+    //define header padrao para todas as requisicoes - executa quando loga
+    api.defaults.headers.authorization = `Bearer ${token}`;
 
     setData({ token, user });
   }, []);
