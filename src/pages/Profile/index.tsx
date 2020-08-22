@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, ChangeEvent } from 'react';
 import { FiArrowLeft, FiMail, FiLock, FiUser, FiCamera } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -32,7 +32,7 @@ const Profile: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
 
   const handleSubmit = useCallback(async (data: ProfileFormData) => {
     // console.log(data);
@@ -75,6 +75,23 @@ const Profile: React.FC = () => {
     }
   }, [addToast, history]);
 
+  const handleAvatarChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const data = new FormData();
+
+      data.append('avatar', e.target.files[0]);
+
+      api.patch('/users/avatar', data).then((response) => {
+        updateUser(response.data);
+
+        addToast({
+          type: "success",
+          title: 'Avatar atualizado!',
+        })
+      });
+    }
+  }, [addToast, updateUser]);
+
   return (
     <Container>
         <header>
@@ -97,7 +114,7 @@ const Profile: React.FC = () => {
                   <img src={user.avatar_url} alt={user.name} />
                   <label htmlFor="avatar">
                     <FiCamera />
-                    <input type="file" id="avatar"/>
+                    <input type="file" id="avatar" onChange={handleAvatarChange} />
                   </label>
 
                 </AvatarInput>
