@@ -95,9 +95,11 @@ const Profile: React.FC = () => {
             }} onSubmit={handleSubmit}>
                 <AvatarInput>
                   <img src={user.avatar_url} alt={user.name} />
-                  <button type="button">
+                  <label htmlFor="avatar">
                     <FiCamera />
-                  </button>
+                    <input type="file" id="avatar"/>
+                  </label>
+
                 </AvatarInput>
 
                 <h1>Meu perfil</h1>
