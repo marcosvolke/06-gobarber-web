@@ -9,11 +9,12 @@ interface inputProps extends InputHTMLAttributes<HTMLInputElement> {
   // o nome não é obrigatório na classe pai, por isso sobrescrevemos:
   name: string;
   // quando recebo um componente como propriedade:
-  icon: React.ComponentType<IconBaseProps>;
+  icon?: React.ComponentType<IconBaseProps>;
+  containerStyle?: object;
 }
 
 // hack do react pra q ele entenda q Icon é uma tag, declara o tipo igual o nome da prop mas com a primeira letra maiúscula
-const Input: React.FC<inputProps> = ({ name, icon: Icon, ...restProps }) => {
+const Input: React.FC<inputProps> = ({ name, icon: Icon, containerStyle = {}, ...restProps }) => {
   // Referência do input no DOM pra dar foco, etc...
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -50,7 +51,7 @@ const Input: React.FC<inputProps> = ({ name, icon: Icon, ...restProps }) => {
 
   return (
     // Se tiver erro é true, senão é false: !!error
-    <Container isErrored={ !!error } isFocused={isFocused} isFilled={isFilled}>
+    <Container style={containerStyle} isErrored={ !!error } isFocused={isFocused} isFilled={isFilled}>
       { Icon && <Icon size={20} /> }
       <input
         onFocus={handleInputFocus}
