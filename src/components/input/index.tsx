@@ -50,7 +50,6 @@ const Input: React.FC<inputProps> = ({ name, icon: Icon, containerStyle = {}, ..
   }, [fieldName, registerField]);
 
   return (
-    // Se tiver erro é true, senão é false: !!error
     <Container style={containerStyle} isErrored={ !!error } isFocused={isFocused} isFilled={isFilled}>
       { Icon && <Icon size={20} /> }
       <input
@@ -59,7 +58,8 @@ const Input: React.FC<inputProps> = ({ name, icon: Icon, containerStyle = {}, ..
         defaultValue={defaultValue}
         ref={inputRef}
         { ...restProps }
-      />
+        />
+        {/* comentário pra baixo pra evitar erro - nunca um comentário pode ser primeira linha de um return de um componente Se tiver erro é true, senão é false: !!error */}
 
       {error && (
         // O error passa a precisar de uma propriedade que é do Tooltip, pq no style eu atribui o tooltip a esse container
